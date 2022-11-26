@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Timmoth.GameOfLife
 {
-    public class GameOfLifeBase : ComponentBase
+    public class GameOfLifeBase : ComponentBase, IDisposable
     {
         protected BlazorCanvas Canvas { get; set; } = default!;
 
@@ -18,11 +18,12 @@ namespace Timmoth.GameOfLife
 
         private GameOfLifeSimulation gameOfLife = default!;
         public readonly int _cellSize = 10;
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
         protected override async Task OnInitializedAsync()
         {
             gameOfLife = new GameOfLifeSimulation(Width / _cellSize, Height / _cellSize);
             using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(20));
-            while (await timer.WaitForNextTickAsync())
+            while (!_cancellationTokenSource.IsCancellationRequested && await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
             {
                 if (!Canvas.Ready)
                 {
@@ -75,6 +76,11 @@ namespace Timmoth.GameOfLife
                     canvas.StrokeRect(_cellSize * i, _cellSize * j, _cellSize, _cellSize);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _cancellationTokenSource.Dispose();
         }
     }
 }
