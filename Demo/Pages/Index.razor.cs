@@ -16,6 +16,7 @@ namespace Demo.Pages
             Width = GetWidth();
             Height = GetHeight();
             HasLoaded = true;
+            await InvokeAsync(StateHasChanged);
         }
 
         [JSImport("GetWidth", "Index")]

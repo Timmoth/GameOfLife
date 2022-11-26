@@ -12,6 +12,9 @@ namespace Timmoth.GameOfLife
 
         [Parameter, EditorRequired]
         public int Height { get; set; }
+        [Parameter, EditorRequired]
+        public RenderFragment ChildContent { get; set; } = default!;
+
 
         private GameOfLifeSimulation gameOfLife = default!;
         public readonly int _cellSize = 10;

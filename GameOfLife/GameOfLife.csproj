@@ -7,9 +7,9 @@
     <AssemblyName>Timmoth.GameOfLife</AssemblyName>
     <RootNamespace>Timmoth.GameOfLife</RootNamespace>
     <Authors>Timmoth</Authors>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
     <Product>GameOfLife</Product>
     <Description>A Blazor Wasm implementation of Conways GameOfLife</Description>
     <Copyright>MIT</Copyright>
