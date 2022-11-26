@@ -3,7 +3,8 @@
 
 @if (HasLoaded)
 {
-    <GameOfLife Width=@Width Height=@Height>
+    <button @onclick="@Reset">Reset</button>
+    <GameOfLife Width=@Width Height=@Height @ref=@GameOfLifeRef>
         <canvas width="@Width" height="@Height"></canvas>
     </GameOfLife>
 }

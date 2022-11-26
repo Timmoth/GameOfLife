@@ -15,14 +15,17 @@ namespace Timmoth.GameOfLife
         [Parameter, EditorRequired]
         public RenderFragment ChildContent { get; set; } = default!;
 
+        [Parameter] public int CellSize { get; set; } = 10;
+        [Parameter] public float Density { get; set; } = 0.8f;
+        [Parameter] public TimeSpan Delay { get; set; } = TimeSpan.FromMilliseconds(20);
 
         private GameOfLifeSimulation gameOfLife = default!;
-        public readonly int _cellSize = 10;
         private readonly CancellationTokenSource _cancellationTokenSource = new();
+        private bool _reset = false;
         protected override async Task OnInitializedAsync()
         {
-            gameOfLife = new GameOfLifeSimulation(Width / _cellSize, Height / _cellSize);
-            using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(20));
+            gameOfLife = new GameOfLifeSimulation(Width / CellSize, Height / CellSize, Density);
+            using var timer = new PeriodicTimer(Delay);
             while (!_cancellationTokenSource.IsCancellationRequested && await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
             {
                 if (!Canvas.Ready)
@@ -30,8 +33,14 @@ namespace Timmoth.GameOfLife
                     continue;
                 }
 
-                Draw(Canvas);
+                if (_reset)
+                {
+                    _reset = false;
+                    gameOfLife.Reset();
+                }
+
                 gameOfLife.Next();
+                Draw(Canvas);
             }
         }
         private void Draw(BlazorCanvas canvas)
@@ -43,9 +52,9 @@ namespace Timmoth.GameOfLife
             canvas.StrokeStyle("white");
 
             // Update Scene
-            for (int i = 0; i < gameOfLife.Width; i++)
+            for (var i = 0; i < gameOfLife.Width; i++)
             {
-                for (int j = 0; j < gameOfLife.Height; j++)
+                for (var j = 0; j < gameOfLife.Height; j++)
                 {
                     var age = gameOfLife.Cells[i, j];
                     switch (age)
@@ -72,8 +81,8 @@ namespace Timmoth.GameOfLife
                             break;
                     }
 
-                    canvas.FillRect(_cellSize * i, _cellSize * j, _cellSize, _cellSize);
-                    canvas.StrokeRect(_cellSize * i, _cellSize * j, _cellSize, _cellSize);
+                    canvas.FillRect(CellSize * i, CellSize * j, CellSize, CellSize);
+                    canvas.StrokeRect(CellSize * i, CellSize * j, CellSize, CellSize);
                 }
             }
         }
@@ -81,6 +90,11 @@ namespace Timmoth.GameOfLife
         public void Dispose()
         {
             _cancellationTokenSource.Dispose();
+        }
+
+        public void Reset()
+        {
+            _reset = true;
         }
     }
 }

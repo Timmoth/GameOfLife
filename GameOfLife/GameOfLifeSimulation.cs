@@ -4,21 +4,27 @@ public class GameOfLifeSimulation
 {
     public int Width { get; }
     public int Height { get; }
+    public float Density { get; set; }
     public int[,] Cells { get; private set; }
 
     private readonly Random _rnd = new();
-    public GameOfLifeSimulation(int width, int height)
+    public GameOfLifeSimulation(int width, int height, float density)
     {
         Width = width;
         Height = height;
+        Density = density;
 
         Cells = new int[Width, Height];
+        Reset();
+    }
 
+    public void Reset()
+    {
         for (var i = 0; i < Width; i++)
         {
             for (var j = 0; j < Height; j++)
             {
-                if (_rnd.NextSingle() > 0.5)
+                if (_rnd.NextSingle() <= Density)
                     Cells[i, j] = 0;
                 else
                     Cells[i, j] = 1;
