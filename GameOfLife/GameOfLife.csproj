@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Timmoth.GameOfLife</AssemblyName>
+    <RootNamespace>Timmoth.GameOfLife</RootNamespace>
+    <Authors>Timmoth</Authors>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <Product>GameOfLife</Product>
+    <Description>A Blazor Wasm implementation of Conways GameOfLife</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://github.com/Timmoth/GameOfLife</PackageProjectUrl>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aptacode.BlazorCanvas" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
