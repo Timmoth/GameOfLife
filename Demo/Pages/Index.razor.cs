@@ -1,7 +1,5 @@
 using System.Runtime.InteropServices.JavaScript;
-using Aptacode.BlazorCanvas;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Demo.Pages
 {

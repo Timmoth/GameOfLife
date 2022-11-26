@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Timmoth.GameOfLife
 {
-    public partial class ConwayPageBase : ComponentBase
+    public class GameOfLifeBase : ComponentBase
     {
         protected BlazorCanvas Canvas { get; set; } = default!;
 
