@@ -4,7 +4,12 @@
 @if (HasLoaded)
 {
     <button @onclick="@Reset">Reset</button>
-    <GameOfLife Width=@Width Height=@Height @ref=@GameOfLifeRef>
+    <input type="range" min="1" max="100" class="slider" value="@Frequency" @oninput="@((args) => {
+                                                                                                      Frequency = Convert.ToInt32(args.Value); 
+                                                                                                      Delay = 100 - Frequency;
+                                                                                                      StateHasChanged(); })">
+
+    <GameOfLife Width=@Width Height=@Height @ref=@GameOfLifeRef Delay="@Delay">
         <canvas width="@Width" height="@Height"></canvas>
     </GameOfLife>
 }

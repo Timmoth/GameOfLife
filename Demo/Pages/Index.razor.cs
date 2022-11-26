@@ -9,6 +9,8 @@ namespace Demo.Pages
         protected int Width = 600;
         protected int Height = 600;
         public bool HasLoaded { get; set; }
+        public int Frequency { get; set; } = 50;
+        public int Delay { get; set; } = 50;
         public GameOfLife GameOfLifeRef { get; set; } = default!;
         protected override async Task OnInitializedAsync()
         {

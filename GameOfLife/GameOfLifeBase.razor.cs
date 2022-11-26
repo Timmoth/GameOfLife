@@ -17,18 +17,21 @@ namespace Timmoth.GameOfLife
 
         [Parameter] public int CellSize { get; set; } = 10;
         [Parameter] public float Density { get; set; } = 0.8f;
-        [Parameter] public TimeSpan Delay { get; set; } = TimeSpan.FromMilliseconds(20);
+        [Parameter] public int Delay { get; set; } = 50;
 
         private GameOfLifeSimulation gameOfLife = default!;
         private readonly CancellationTokenSource _cancellationTokenSource = new();
         private bool _reset = false;
+
         protected override async Task OnInitializedAsync()
         {
             gameOfLife = new GameOfLifeSimulation(Width / CellSize, Height / CellSize, Density);
-            using var timer = new PeriodicTimer(Delay);
-            while (!_cancellationTokenSource.IsCancellationRequested && await timer.WaitForNextTickAsync(_cancellationTokenSource.Token))
+            
+            while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                if (!Canvas.Ready)
+                await Task.Delay(10 + Delay, _cancellationTokenSource.Token);
+
+                if (Canvas is not { Ready: true })
                 {
                     continue;
                 }
