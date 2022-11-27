@@ -66,8 +66,16 @@ public class GameOfLifeSimulation
 
                 if (liveNeighbours == 3)
                 {
-                    cells[x, y] = age + 1;
-                }else if (liveNeighbours == 2)
+                    if (age > 8)
+                    {
+                        cells[x, y] = 0;
+                    }
+                    else
+                    {
+                        cells[x, y] = age + 1;
+                    }
+                }
+                else if (liveNeighbours == 2)
                 {
                     cells[x, y] = age;
                 }
